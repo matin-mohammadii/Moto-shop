@@ -1,0 +1,62 @@
+
+{% extends 'product/base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>{{ product.name }}</h1>
+
+    <hr>
+
+    <h3>مشخصات محصول</h3>
+
+    {% if product.image %}
+        <img
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+            class="detail-image"
+        >
+    {% else %}
+        <div class="no-image">
+            تصویری برای این محصول ثبت نشده است.
+        </div>
+    {% endif %}
+
+    <p>نام محصول: {{ product.name }}</p>
+
+    <p>قیمت: {{ product.price }} تومان</p>
+
+    <p>موجودی انبار: {{ product.stock }}</p>
+
+    {% if product.stock > 0 %}
+
+        {% if user.is_authenticated %}
+
+            <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit">افزودن به سبد خرید</button>
+            </form>
+
+        {% else %}
+
+            <p>برای خرید ابتدا وارد حساب کاربری شوید.</p>
+            <a class="btn" href="{% url 'login' %}">ورود به حساب</a>
+
+        {% endif %}
+
+    {% else %}
+
+        <p style="color:#ff5555;">این محصول ناموجود است.</p>
+
+    {% endif %}
+
+</div>
+
+<a class="btn" href="{% url 'product_list' %}">
+    بازگشت به فروشگاه
+</a>
+
+{% endblock %}

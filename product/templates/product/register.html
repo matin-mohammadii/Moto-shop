@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت نام</title>
+</head>
+<body>
+
+{% extends 'product/base.html' %}
+
+{% block title %}ثبت‌نام{% endblock %}
+
+{% block content %}
+
+<div class="card" style="max-width:500px; margin:40px auto;">
+
+    <h1>ساخت حساب کاربری</h1>
+
+    <p>برای خرید از فروشگاه ابتدا ثبت‌نام کنید.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">ثبت‌نام</button>
+    </form>
+
+    <p>
+        قبلاً ثبت‌نام کرده‌اید؟
+        <a href="{% url 'login' %}">وارد شوید</a>
+    </p>
+
+</div>
+
+{% endblock %}
+
+</body>
+</html>

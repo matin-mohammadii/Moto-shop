@@ -1,0 +1,61 @@
+
+{% extends 'product/base.html' %}
+
+{% block title %}فروشگاه موتورسیکلت{% endblock %}
+
+{% block content %}
+
+<section class="card" style="text-align:center; padding:45px 20px;">
+    <h1>به فروشگاه موتورسیکلت خوش آمدید</h1>
+    <p>محصولات مورد نیاز موتورسیکلت خود را با بهترین کیفیت پیدا کنید.</p>
+</section>
+
+<h2>محصولات فروشگاه</h2>
+
+<form method="GET" style="margin-bottom:25px;">
+    <input
+        type="text"
+        name="search"
+        placeholder="نام محصول را جستجو کنید..."
+        value="{{ request.GET.search|default:'' }}"
+    >
+    <button type="submit">جستجو</button>
+</form>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
+
+    {% for product in products %}
+
+        <div class="card">
+
+            {% if product.image %}
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                    class="product-image"
+                >
+            {% else %}
+                <div class="no-image">بدون تصویر</div>
+            {% endif %}
+
+            <h3>{{ product.name }}</h3>
+
+            <p>قیمت: {{ product.price }} تومان</p>
+
+            <p>موجودی: {{ product.stock }}</p>
+
+            <a class="btn" href="{% url 'product_detail' product.id %}">
+                مشاهده محصول
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>محصولی برای نمایش وجود ندارد.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

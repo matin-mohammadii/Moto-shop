@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>سبد خرید</title>
+</head>
+<body>
+    {% extends 'product/base.html' %}
+
+{% block title %}سبد خرید من{% endblock %}
+
+{% block content %}
+
+<h1>سبد خرید من</h1>
+
+{% if cart_items %}
+
+    {% for item in cart_items %}
+
+        <div class="card">
+
+            <h3>{{ item.product.name }}</h3>
+
+            <p>قیمت واحد: {{ item.product.price }} تومان</p>
+
+            <p>تعداد فعلی: {{ item.quantity }}</p>
+
+            <p>
+                قیمت کل:
+                {% widthratio item.product.price 1 item.quantity as item_total %}
+                {{ item_total }} تومان
+            </p>
+
+            <form method="POST" action="{% url 'update_cart' item.id %}">
+                {% csrf_token %}
+
+                <label>تعداد جدید:</label>
+
+                <input
+                    type="number"
+                    name="quantity"
+                    min="1"
+                    max="{{ item.product.stock }}"
+                    value="{{ item.quantity }}"
+                    required
+                >
+
+                <button type="submit">ویرایش تعداد</button>
+            </form>
+
+            <form method="POST" action="{% url 'remove_from_cart' item.id %}">
+                {% csrf_token %}
+                <button type="submit" style="background:#b52b2b;">
+                    حذف محصول
+                </button>
+            </form>
+
+        </div>
+
+    {% endfor %}
+
+    <div class="card">
+        <h2>مبلغ کل سبد خرید: {{ total_price }} تومان</h2>
+
+        <form method="POST" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <button type="submit">ثبت نهایی سفارش</button>
+        </form>
+    </div>
+
+{% else %}
+
+    <div class="card">
+        <p>سبد خرید شما خالی است.</p>
+    </div>
+
+{% endif %}
+
+<a class="btn" href="{% url 'product_list' %}">
+    ادامه خرید
+</a>
+
+{% endblock %}
+
+</body>
+</html>

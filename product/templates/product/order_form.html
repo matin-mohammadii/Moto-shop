@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت سفارش</title>
+</head>
+<body>
+
+    <h1>ثبت سفارش {{ product.name }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">ثبت سفارش</button>
+    </form>
+
+</body>
+</html>

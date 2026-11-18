@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت سفارش موفق</title>
+</head>
+<body>
+{% extends 'product/base.html' %}
+
+{% block title %}ثبت سفارش موفق{% endblock %}
+
+{% block content %}
+
+<div class="card" style="text-align:center; padding:40px;">
+
+    <h1 style="color:#35c978;">سفارش شما ثبت شد!</h1>
+
+    <p>از خرید شما سپاسگزاریم.</p>
+
+    <hr>
+
+    <h3>مشخصات سفارش</h3>
+
+    <p>نام محصول: {{ order.product.name }}</p>
+
+    <p>تعداد: {{ order.quantity }}</p>
+
+    <p>قیمت واحد: {{ order.product.price }} تومان</p>
+
+    <p>وضعیت: {{ order.get_status_display }}</p>
+
+    <a class="btn" href="{% url 'order_history' %}">
+        مشاهده سفارش‌های من
+    </a>
+
+    <a class="btn" href="{% url 'product_list' %}">
+        بازگشت به فروشگاه
+    </a>
+
+</div>
+
+{% endblock %}
+
+</body>
+</html>
